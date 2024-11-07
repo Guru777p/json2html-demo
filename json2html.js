@@ -1,23 +1,28 @@
+// json2html.js
 export default function json2html(data) {
-  // Start table with a data-user attribute
-  let html = '<table data-user="samithreddy888@gmail.com">';
+  // Find all unique keys for table columns
+  const columns = [...new Set(data.flatMap(Object.keys))];
 
-  // Table header
-  html += "<thead><tr><th>Name</th><th>Age</th><th>Gender</th></tr></thead>";
-
-  // Table body
-  html += "<tbody>";
-  data.forEach((row) => {
-    html += "<tr>";
-    html += `<td>${row.Name || ""}</td>`;
-    html += `<td>${row.Age || ""}</td>`;
-    html += `<td>${row.Gender || ""}</td>`;
-    html += "</tr>";
+  // Start the HTML table
+  let html = `<table data-user="pguruprasad777@gmail.com">\n`;
+  
+  // Add the header row with column names
+  html += "  <thead>\n    <tr>";
+  columns.forEach(col => {
+    html += `<th>${col}</th>`;
   });
-  html += "</tbody>";
+  html += "</tr>\n  </thead>\n";
 
-  // Close table
-  html += "</table>";
+  // Add the body rows with data
+  html += "  <tbody>\n";
+  data.forEach(row => {
+    html += "    <tr>";
+    columns.forEach(col => {
+      html += `<td>${row[col] !== undefined ? row[col] : ""}</td>`;
+    });
+    html += "</tr>\n";
+  });
+  html += "  </tbody>\n</table>";
 
   return html;
 }
